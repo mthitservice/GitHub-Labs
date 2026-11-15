@@ -82,9 +82,9 @@ Die Bilder in den Anleitungen (Ordner `images/labs`) zeigen echte Ergebnisse aus
 | [Lab 2](Lab-02-Erweitern/README.md) | Im Service weiterbauen: Bericht im Browser, visuelle Berechnung, berichtsübergreifender Drillthrough, Erkunden | 30 Min. |
 | [Lab 3](Lab-03-Verteilen/README.md) | Dashboard, Warnung, Abo, Excel und RLS-Test | 30 Min. |
 | [Lab 3 Teil B](Lab-07-App/README.md) | Ihre Organisations-App: Startseite, Abschnitte, Branding, Zielgruppe Management | 15 Min. |
-| [Lab 4](Lab-04-Eigenes-Modell/README.md) | Große Modelle: inkrementelle Aktualisierung, Zeitplan, Höherstufen, RLS-Test, Speicheranalyse, Vorlage | 30 Min. |
+| [Lab 4](Lab-04-Eigenes-Modell/README.md) | Große Modelle: inkrementelle Aktualisierung (Demo), Aktualisierung und Gateway, Höherstufen, RLS-Test, Speicheranalyse, Vorlage | 30 Min. |
 | [Lab 5](Lab-05-Cloud-Stationen/README.md) | Cloud-Stationen: 14 Neuerungen selbst ausprobieren (mind. 8) | 30 Min. |
-| [Lab 4 Teil C](Lab-06-WhatIf/README.md) | What-If-Simulation und Prognose (in Lab 4, ohne Datenbankzugriff oder als Erweiterung) | in Lab 4 |
+| [Lab 4 Teil C](Lab-06-WhatIf/README.md) | What-If-Simulation und Prognose (Teil von Lab 4) | in Lab 4 |
 
 Außerdem:
 - [Migrations-Checkliste](Migrations-Checkliste.md)
