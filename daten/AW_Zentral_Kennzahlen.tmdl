@@ -1,0 +1,106 @@
+createOrReplace
+
+	ref table FactInternetSales
+
+		/// Internet-Umsatz (FactInternetSales[SalesAmount]) ohne Steuer und Fracht.
+		measure 'Umsatz' = SUM ( FactInternetSales[SalesAmount] )
+			formatString: #,##0
+			displayFolder: Kennzahlen
+
+		/// Produktkosten der Internet-Verkäufe.
+		measure 'Kosten' = SUM ( FactInternetSales[TotalProductCost] )
+			formatString: #,##0
+			displayFolder: Kennzahlen
+
+		/// Umsatz minus Produktkosten (Internet).
+		measure 'Marge' = [Umsatz] - [Kosten]
+			formatString: #,##0
+			displayFolder: Kennzahlen
+
+		/// Marge im Verhältnis zum Umsatz (Internet).
+		measure 'Marge %' = DIVIDE ( [Marge], [Umsatz] )
+			formatString: 0.0%
+			displayFolder: Kennzahlen
+
+		/// Anzahl der Internet-Bestellungen.
+		measure 'Bestellungen' = DISTINCTCOUNT ( FactInternetSales[SalesOrderNumber] )
+			formatString: #,##0
+			displayFolder: Kennzahlen
+
+		/// Verkaufte Stückzahl (Internet).
+		measure 'Menge' = SUM ( FactInternetSales[OrderQuantity] )
+			formatString: #,##0
+			displayFolder: Kennzahlen
+
+		/// Anzahl der Kunden mit mindestens einer Internet-Bestellung.
+		measure 'Kunden' = DISTINCTCOUNT ( FactInternetSales[CustomerKey] )
+			formatString: #,##0
+			displayFolder: Kennzahlen
+
+		/// Durchschnittlicher Umsatz je Internet-Bestellung.
+		measure 'Ø Bestellwert' = DIVIDE ( [Umsatz], [Bestellungen] )
+			formatString: #,##0.00
+			displayFolder: Kennzahlen
+
+		/// Gewährter Rabatt (Internet).
+		measure 'Rabatt' = SUM ( FactInternetSales[DiscountAmount] )
+			formatString: #,##0
+			displayFolder: Kennzahlen
+
+		/// Internet-Umsatz im gleichen Zeitraum des Vorjahres.
+		measure 'Umsatz VJ' = CALCULATE ( [Umsatz], SAMEPERIODLASTYEAR ( DimDate[FullDateAlternateKey] ) )
+			formatString: #,##0
+			displayFolder: Kennzahlen
+
+		/// Veränderung des Internet-Umsatzes gegenüber Vorjahr.
+		measure 'Umsatz Δ VJ %' = DIVIDE ( [Umsatz] - [Umsatz VJ], [Umsatz VJ] )
+			formatString: 0.0%
+			displayFolder: Kennzahlen
+
+	ref table FactResellerSales
+
+		/// Umsatz über Händler (FactResellerSales[SalesAmount]).
+		measure 'Händlerumsatz' = SUM ( FactResellerSales[SalesAmount] )
+			formatString: #,##0
+			displayFolder: Kennzahlen
+
+		/// Produktkosten der Händler-Verkäufe.
+		measure 'Händlerkosten' = SUM ( FactResellerSales[TotalProductCost] )
+			formatString: #,##0
+			displayFolder: Kennzahlen
+
+		/// Marge im Händlergeschäft.
+		measure 'Händlermarge %' = DIVIDE ( [Händlerumsatz] - [Händlerkosten], [Händlerumsatz] )
+			formatString: 0.0%
+			displayFolder: Kennzahlen
+
+		/// Händlerumsatz im gleichen Zeitraum des Vorjahres.
+		measure 'Händlerumsatz VJ' = CALCULATE ( [Händlerumsatz], SAMEPERIODLASTYEAR ( DimDate[FullDateAlternateKey] ) )
+			formatString: #,##0
+			displayFolder: Kennzahlen
+
+		/// Anzahl der Händler mit Umsatz.
+		measure 'Aktive Händler' = DISTINCTCOUNT ( FactResellerSales[ResellerKey] )
+			formatString: #,##0
+			displayFolder: Kennzahlen
+
+		/// Internet- und Händlerumsatz zusammen.
+		measure 'Gesamtumsatz' = [Umsatz] + [Händlerumsatz]
+			formatString: #,##0
+			displayFolder: Kennzahlen
+
+	role 'Vertrieb Europa'
+		modelPermission: read
+
+		tablePermission DimSalesTerritory = [SalesTerritoryGroup] = "Europe"
+
+	role 'Vertrieb Nordamerika'
+		modelPermission: read
+
+		tablePermission DimSalesTerritory = [SalesTerritoryGroup] = "North America"
+
+	role 'Vertrieb Pazifik'
+		modelPermission: read
+
+		tablePermission DimSalesTerritory = [SalesTerritoryGroup] = "Pacific"
+
